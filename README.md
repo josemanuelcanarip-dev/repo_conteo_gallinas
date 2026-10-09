@@ -106,6 +106,8 @@ La preparación para modelado incluirá revisar las anotaciones, convertirlas al
 │       ├── eda_correlaciones.csv
 │       ├── eda_denso.csv
 │       └── fig01 … fig11 *.png
+├── src/ # codigo fuente
+├── logs/ # logs
 ├── README.md
 ├── README1.md
 ├── requirements.txt
