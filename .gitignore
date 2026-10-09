@@ -1,11 +1,16 @@
-# env
-.venv
+# Entorno virtual
+.venv/
 
-# video
+# Videos: conservar la carpeta mediante un archivo vacío
 data/raw/*
+!data/raw/.gitkeep
 
-# imgs
+# Imágenes: permitir una subcarpeta
 data/processed/*
+!data/processed/20240805_215845_tp00007/
+
+# Ignorar su contenido salvo estas cinco imágenes
+data/processed/20240805_215845_tp00007/*
 !data/processed/20240805_215845_tp00007/20240805_215845_tp00007_t0000s_1.jpg
 !data/processed/20240805_215845_tp00007/20240805_215845_tp00007_t0020s_2.jpg
 !data/processed/20240805_215845_tp00007/20240805_215845_tp00007_t0040s_3.jpg
