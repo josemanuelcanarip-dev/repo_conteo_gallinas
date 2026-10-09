@@ -1,13 +1,10 @@
 # 🐔 Sistema de Detección y Conteo Automático de Gallinas Ponedoras
 
-**Granja rural — Lima, Perú**
+**Visión por computadora y deep learning · Granja rural en Lima, Perú**
 
-Proyecto de investigación de la **Maestría en Inteligencia Artificial (UNI)**, desarrollado en el
-marco del curso **Proyecto de Investigación II (MIA 403)**.
+Repositorio de desarrollo de la tesis **«Sistema de detección y conteo automático de gallinas ponedoras en una granja rural en Lima, Perú, mediante visión por computadora y deep learning»**, de la Maestría en Ciencias con mención en Inteligencia Artificial de la **Universidad Nacional de Ingeniería (UNI)**.
 
-El objetivo es construir la base de datos y el análisis exploratorio necesarios para un sistema que
-**detecte y cuente gallinas ponedoras** a partir de grabaciones de video de los galpones, usando
-técnicas de visión por computadora.
+El proyecto busca detectar gallinas ponedoras en imágenes y videos, estimar su cantidad y evaluar si el seguimiento multiobjeto mediante **DeepSORT** mejora el conteo frente a un enfoque basado en detecciones independientes por fotograma. Se contempla el uso de modelos de la familia **YOLO** y la evaluación de diferentes configuraciones de aumento de datos.
 
 ---
 
@@ -17,34 +14,71 @@ técnicas de visión por computadora.
 
 ---
 
-## 🎯 Objetivo del repositorio
+## 🎯 Objetivos de la investigación
 
-Este repositorio cubre la **etapa de preparación y análisis de datos** del proyecto:
+### Objetivo general
 
-1. **Inventariar y caracterizar** las grabaciones originales de los galpones.
-2. **Extraer fotogramas** (frames) de los videos para construir el dataset de imágenes.
-3. Realizar un **Análisis Exploratorio de Datos (EDA)** de videos y frames para evaluar calidad,
-   iluminación, movimiento y redundancia antes de entrenar cualquier modelo.
+Desarrollar y evaluar un sistema de visión por computadora basado en la detección y seguimiento multiobjeto para el conteo automático de gallinas ponedoras en imágenes y videos capturados en una granja rural de Lima, utilizando métricas de detección, seguimiento y conteo.
 
----
+### Objetivos específicos
+
+1. Construir y documentar un conjunto de imágenes y videos de gallinas ponedoras capturados en una granja rural de Lima, incluyendo su anotación para entrenamiento y evaluación.
+2. Evaluar el efecto de diferentes configuraciones de aumento de datos sobre el desempeño del modelo de detección para el conteo de gallinas ponedoras en una granja rural en Lima, Perú.
+3. Evaluar si la incorporación de DeepSORT reduce el error de conteo y la duplicidad de identificadores frente a un conteo base sin seguimiento.
+
+### Relación con el código
+
+| Objetivo | Trabajo previsto en el repositorio | Avance documentado |
+|---|---|---|
+| Construir y documentar el dataset | Inventario de videos, extracción de fotogramas, EDA y anotación con cajas delimitadoras | Notebooks de extracción y EDA; plantilla de anotación VIA disponible. Anotación completa y particiones pendientes. |
+| Evaluar el aumento de datos | Entrenamiento y comparación de configuraciones sin aumento y con transformaciones de imagen | Pendiente de implementación. |
+| Evaluar DeepSORT | Integración detector–seguidor y comparación del conteo con y sin seguimiento | Pendiente de implementación. |
+
+--
 
 ## 📊 Dataset
 
-- **Fuente:** captura propia en la visita de campo a los galpones.
-- **Formato:** 10 videos `.mp4`, resolución **1920×1080**, codec **H.264**, ~**15 FPS**, ~**256 MB** cada uno.
-- **Duración:** ~20.9 min por video (una grabación de 14.3 min).
-- **Fechas y cámaras:**
 
-| Fecha | Videos | Cámaras | Imágenes extraídas |
-|---|---|---|---|
-| 2024-08-05 | 2 | tp00007, tp00015 | 126 |
-| 2026-07-27 | 1 | tp00000 | 63 |
-| 2026-07-28 | 7 | tp00008 … tp00014 | 421 |
+Datos de captura propia obtenidos durante visitas de campo a los galpones.
+
+| Característica | Descripción |
+|---|---|
+| Videos | 10 archivos `.mp4` |
+| Resolución | 1920 × 1080 píxeles |
+| Códec | H.264 |
+| Frecuencia | Aproximadamente 15 FPS |
+| Tamaño | Aproximadamente 256 MB por video |
+| Duración | Aproximadamente 20.9 minutos por video; una grabación de 14.3 minutos |
+| Muestreo de imágenes | Un fotograma cada 20 segundos |
+| Imágenes extraídas | 610 archivos JPG |
+
+| Fecha | Videos | Identificadores de cámara | Imágenes extraídas |
+|---|---:|---|---:|
+| 2024-08-05 | 2 | `tp00007`, `tp00015` | 126 |
+| 2026-07-27 | 1 | `tp00000` | 63 |
+| 2026-07-28 | 7 | `tp00008` a `tp00014` | 421 |
 | **Total** | **10** | — | **610** |
 
-- **Fotogramas:** se extrae 1 imagen cada **20 segundos** de cada video → **610 imágenes JPG**.
-- **Nomenclatura:** `AAAAMMDD_HHMMSS_tpXXXXX` = fecha y hora de inicio + identificador de cámara.
-  - Frame: `AAAAMMDD_HHMMSS_tpXXXXX_tSSSSs_N.jpg` (segundo + número de orden).
+Estas cifras corresponden al inventario documentado en esta etapa; deben actualizarse cuando cambien los videos o el intervalo de extracción. Las 610 imágenes extraídas no equivalen todavía a 610 imágenes anotadas.
+
+### Nomenclatura y trazabilidad
+
+- **Video:** `AAAAMMDD_HHMMSS_tpXXXXX.mp4`.
+- **Fotograma:** `AAAAMMDD_HHMMSS_tpXXXXX_tSSSSs_N.jpg`.
+- `AAAAMMDD_HHMMSS`: fecha y hora de inicio de la grabación.
+- `tpXXXXX`: identificador de cámara.
+- `tSSSSs`: segundo de extracción dentro del video.
+- `N`: número de orden del fotograma.
+
+Ejemplo: `20240805_215845_tp00007_t0020s_2.jpg` identifica el segundo fotograma, extraído a los 20 segundos del video correspondiente.
+
+### Anotación y partición previstas
+
+El plan de tesis contempla anotar las gallinas visibles mediante **cajas delimitadoras** con **VGG Image Annotator (VIA)**. La plantilla disponible es `artifacts/annotate_pollo_template.json`.
+
+La preparación para modelado incluirá revisar las anotaciones, convertirlas al formato del detector y definir los subconjuntos de entrenamiento, validación y prueba.
+
+**Criterio propuesto para la implementación:** separar los datos por grabación o sesión de captura, evitando que fotogramas muy similares de una misma secuencia queden repartidos entre entrenamiento y evaluación. Documentar la partición y aplicar el aumento de datos únicamente al entrenamiento.
 
 ---
 
