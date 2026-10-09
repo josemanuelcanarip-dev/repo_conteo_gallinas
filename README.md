@@ -34,7 +34,7 @@ Desarrollar y evaluar un sistema de visión por computadora basado en la detecci
 | Evaluar el aumento de datos | Entrenamiento y comparación de configuraciones sin aumento y con transformaciones de imagen | Pendiente de implementación. |
 | Evaluar DeepSORT | Integración detector–seguidor y comparación del conteo con y sin seguimiento | Pendiente de implementación. |
 
---
+---
 
 ## 📊 Dataset
 
