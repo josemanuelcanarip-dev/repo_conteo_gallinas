@@ -1,0 +1,23 @@
+{
+  "pesos_calidad": {
+    "nitidez": 0.35,
+    "exposicion": 0.25,
+    "contraste": 0.2,
+    "color": 0.1,
+    "estabilidad": 0.1
+  },
+  "umbrales": {
+    "negro": 12.0,
+    "congelado": 0.55,
+    "oscuros_pct": 5.0,
+    "quemados_pct": 5.0,
+    "claros_pct": 10.0,
+    "corte_escena": 0.1,
+    "duplicado_hamming": 4,
+    "racha_stall": 15,
+    "borroso_relativo": 0.4,
+    "brillo_relativo": 0.15,
+    "contraste_relativo": 0.7
+  },
+  "muestreo_segundos": 5.0
+}
